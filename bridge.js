@@ -67,3 +67,25 @@ io.on('connection', (socket) => {
         'stty echo',
         'echo ""'
     ];
+
+    setTimeout(() => {
+        userShell.stdin.write(bootSequence.join('\n') + '\n');
+    }, 1000);
+
+    userShell.stdout.on('data', (data) => socket.emit('output', data.toString()));
+    userShell.stderr.on('data', (data) => socket.emit('output', data.toString()));
+
+    socket.on('input', (data) => {
+        if (userShell.stdin.writable) userShell.stdin.write(data);
+    });
+
+    socket.on('stop_signal', () => {
+        if (userShell.stdin.writable) userShell.stdin.write('\x03\n');
+    });
+
+    socket.on('disconnect', () => {
+        userShell.kill();
+      });
+    });
+  });
+server.listen(3000);
