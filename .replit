@@ -1,0 +1,17 @@
+modules = ["nodejs-22"]
+
+run = "node core/bridge.js"
+
+hidden = [".config", "package-lock.json", "parrot", "parrot.tar.xz"]
+
+[nix]
+channel = "stable-24_11"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[deployment]
+deploymentTarget = "cloudrun"
+build = ["sh", "-c", "chmod +x core/*.sh && sh core/setup_alpine.sh"]
+run = ["sh", "-c", "sh -c \"(mkdir -p /home/runner/workspace/alpine && tar -xzf /home/runner/workspace/core/alpine.tar.gz -C /home/runner/workspace/alpine && echo 'nameserver 1.1.1.1' > /home/runner/workspace/alpine/etc/resolv.conf &) && node core/bridge.js\""]
