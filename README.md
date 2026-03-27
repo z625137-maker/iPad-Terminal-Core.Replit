@@ -22,3 +22,7 @@ A Message from the Developer
 "Hardware limitations should never limit your creativity."
 As a high school student without access to a PC, my iPad was my only weapon. This project is my direct answer to anyone trying to enjoy programming within a restricted environment.
 If you have any ideas on how to optimize this even further for an iPad-only workflow, I’d love to hear your feedback!
+
+Security Warning (Important)
+This project is a naked shell access tool. It contains no authentication or encryption layers by design to keep the core lightweight.
+Do not deploy this to a public URL. Anyone who discovers the link will have full control over your environment. It is intended for local use or strictly private development environments only.
